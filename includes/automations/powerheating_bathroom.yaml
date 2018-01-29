@@ -1,0 +1,70 @@
+
+# Powerheating for Bathroom
+- alias: "Powerheat Bathroom"
+  trigger:
+    platform: state
+    entity_id: input_boolean.power_heat_bathroom
+    to: 'on'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.bathroom_radiator_heating_1
+        temperature: 27
+
+- alias: "Powerheat Bathroom"
+  trigger:
+    platform: state
+    entity_id: input_boolean.power_heat_bathroom
+    to: 'on'
+    for:
+      minutes: 30
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.bathroom_radiator_heating_1
+        temperature: 25
+
+- alias: "Powerheat Bathroom"
+  trigger:
+    platform: state
+    entity_id: input_boolean.power_heat_bathroom
+    to: 'on'
+    for:
+      hours: 1
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.power_heat_bathroom
+
+### When Powerheating is turned off (after an hour or manually) and the bathroom heating is activated, go back to target temp
+- alias: "Powerheat Bathroom Off"
+  trigger:
+    platform: state
+    entity_id: input_boolean.power_heat_bathroom
+    to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heat_bathroom
+      state: 'on'
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.bathroom_radiator_heating_1
+        temperature: '{{ states.input_number.bathroom_target_temp.state | float }}'
+
+### When Powerheating is turned off (after an hour or manually) and the bathroom heating is not activated, go back to 17 degrees
+- alias: "Powerheat Bathroom Off"
+  trigger:
+    platform: state
+    entity_id: input_boolean.power_heat_bathroom
+    to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heat_bathroom
+      state: 'off'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.bathroom_radiator_heating_1
+        temperature: 17
+

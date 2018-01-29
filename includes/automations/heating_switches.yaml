@@ -1,0 +1,105 @@
+### Downstairs heating switch
+- alias: "Downstair turned on"
+  trigger: 
+    - platform: state
+      entity_id: input_boolean.heat_downstairs
+    - platform: state
+      entity_id: input_number.livingroom_target_temp
+  condition:
+  - condition: state
+    entity_id: input_boolean.heat_downstairs
+    state: 'on' 
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.kitchen_radiator_heating_1
+        temperature: '{{ states.input_number.livingroom_target_temp.state | float }}'
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.livingroom_radiator_1_heating_1
+        temperature: '{{ states.input_number.livingroom_target_temp.state | float }}'
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.livingroom_radiator_2_heating_1
+        temperature: '{{ states.input_number.livingroom_target_temp.state | float }}'
+- alias: "Downstair turned off"
+  trigger: 
+    - platform: state
+      entity_id: input_boolean.heat_downstairs
+      to: 'off'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.kitchen_radiator_heating_1
+        temperature: 15
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.livingroom_radiator_1_heating_1
+        temperature: 15
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.livingroom_radiator_2_heating_1
+        temperature: 15
+
+### Bedroom heating switch
+- alias: "Bedroom turned on"
+  trigger: 
+    - platform: state
+      entity_id: input_boolean.heat_bedroom
+    - platform: state
+      entity_id: input_number.bedroom_target_temp
+  condition:
+  - condition: state
+    entity_id: input_boolean.heat_bedroom
+    state: 'on' 
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.bedroom_radiator_heating_1
+        temperature: '{{ states.input_number.bedroom_target_temp.state | float }}'
+- alias: "Bedroom turned off"
+  trigger: 
+    - platform: state
+      entity_id: input_boolean.heat_bedroom
+      to: 'off'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.bedroom_radiator_heating_1
+        temperature: 17
+
+### Bathroom heating switch
+- alias: "Bathroom turned on"
+  trigger: 
+    - platform: state
+      entity_id: input_boolean.heat_bathroom
+    - platform: state
+      entity_id: input_number.bathroom_target_temp
+  condition:
+  - condition: state
+    entity_id: input_boolean.heat_bathroom
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.power_heat_bathroom
+    state: 'off' 
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.bathroom_radiator_heating_1
+        temperature: '{{ states.input_number.bathroom_target_temp.state | float }}'
+
+- alias: "Bathroom turned off"
+  trigger: 
+    - platform: state
+      entity_id: input_boolean.heat_bathroom
+      to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.power_heat_bathroom
+    state: 'off' 
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.bathroom_radiator_heating_1
+        temperature: 17
+

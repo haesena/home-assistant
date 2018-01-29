@@ -1,0 +1,27 @@
+- alias: "Egg cooker"
+  trigger:
+    platform: state
+    entity_id: switch.egg_cooker
+    to: 'on'
+    for:
+      minutes: 7
+      seconds: 45
+  action:
+    - service: switch.turn_off
+      entity_id: switch.egg_cooker
+    - service: notify.notify
+      data:
+        message: "Your eggs are ready"
+- alias: "Turn off fryer"
+  trigger:
+    platform: state
+    entity_id: switch.friteuse
+    to: 'on'
+    for:
+      hours: 2
+  action:
+    - service: switch.turn_off
+      entity_id: switch.friteuse
+    - service: notify.notify
+      data:
+        message: "The fryer has been turned off, it was on for more than 2 hours"

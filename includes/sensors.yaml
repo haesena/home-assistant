@@ -1,0 +1,93 @@
+- platform: wunderground
+  api_key: !secret wunderground_api_key
+  monitored_conditions:
+    - weather_1d_metric
+    - feelslike_c
+    - temp_high_1d_c
+    - temp_low_1d_c
+    - precip_1d
+    - precip_1d_mm
+    - wind_1d_kph
+
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /
+    - type: memory_use_percent
+    - type: last_boot
+
+- platform: speedtest
+  monitored_conditions:
+    - ping
+    - download
+    - upload 
+
+- platform: command_line
+  name: log_db_file_size
+  command: "du -m /home/homeassistant/.homeassistant/home-assistant_v2.db | cut -f1"
+  unit_of_measurement: 'MB'
+  value_template: '{{ value | int - 1 }}'
+
+- platform: command_line
+  name: ssl_cert_expiry
+  unit_of_measurement: days
+  scan_interval: 86400
+  command: "ssl-cert-check -b -c /etc/letsencrypt/live/haesen.duckdns.org/cert.pem | awk '{ print $NF }'"
+
+- platform: command_line
+  name: git_version
+  command: "bash /home/homeassistant/.homeassistant/scripts/gitversion.sh"
+  
+- platform: template
+  sensors:
+    temp_livingroom_1:
+      friendly_name: "Salon 1"
+      unit_of_measurement: '°C'
+      value_template: "{{ states.climate.livingroom_radiator_1_heating_1.attributes.temperature }}"
+      icon_template: mdi:radiator
+    temp_livingroom_2:
+      friendly_name: "Salon 2"
+      unit_of_measurement: '°C'
+      value_template: "{{ states.climate.livingroom_radiator_2_heating_1.attributes.temperature }}"
+      icon_template: mdi:radiator
+    temp_kitchen:
+      friendly_name: "Kitchen"
+      unit_of_measurement: '°C'
+      value_template: "{{ states.climate.kitchen_radiator_heating_1.attributes.temperature }}"
+      icon_template: mdi:radiator
+    temp_bedroom:
+      friendly_name: "Bedroom"
+      unit_of_measurement: '°C'
+      value_template: "{{ states.climate.bedroom_radiator_heating_1.attributes.temperature }}"
+      icon_template: mdi:radiator
+    temp_bathroom:
+      friendly_name: "Bathroom"
+      unit_of_measurement: '°C'
+      value_template: "{{ states.climate.bathroom_radiator_heating_1.attributes.temperature }}"
+      icon_template: mdi:radiator
+
+    battery_livingroom_1:
+      friendly_name: 'Livingroom 1'
+      value_template: '{{ states.zwave.livingroom_radiator_1.attributes.battery_level }}'
+      unit_of_measurement: '%'
+      icon_template: mdi:battery-charging
+    battery_livingroom_2:
+      friendly_name: 'Livingroom 2'
+      value_template: '{{ states.zwave.livingroom_radiator_2.attributes.battery_level }}'
+      unit_of_measurement: '%'
+      icon_template: mdi:battery-charging
+    battery_kitchen:
+      friendly_name: 'Kitchen'
+      value_template: '{{ states.zwave.kitchen_radiator.attributes.battery_level }}'
+      unit_of_measurement: '%'
+      icon_template: mdi:battery-charging
+    battery_bedroom:
+      friendly_name: 'Bedroom'
+      value_template: '{{ states.zwave.bedroom_radiator.attributes.battery_level }}'
+      unit_of_measurement: '%'
+      icon_template: mdi:battery-charging
+    battery_bathroom:
+      friendly_name: 'Bathroom'
+      value_template: '{{ states.zwave.bathroom_radiator.attributes.battery_level }}'
+      unit_of_measurement: '%'
+      icon_template: mdi:battery-charging

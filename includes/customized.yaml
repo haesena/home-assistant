@@ -1,0 +1,11 @@
+sensor.log_db_file_size:
+  friendly_name: DB-Log
+  icon: mdi:database
+sensor.ssl_cert_expiry:
+  friendly_name: SSL Certificate Expiry
+  icon: mdi:certificate
+sensor.disk_use_:
+  friendly_name: Disk use
+sensor.git_version:
+  friendly_name: Git Version
+  icon: mdi:git

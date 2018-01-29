@@ -1,0 +1,135 @@
+default_view:
+  view: yes
+  name: Home
+  entities:
+    - group.family
+    - group.weather
+
+weather:
+  name: Weather
+  entities:
+    - sensor.pws_weather_1d_metric
+    - sensor.pws_feelslike_c
+    - sensor.pws_temp_high_1d_c
+    - sensor.pws_temp_low_1d_c
+    - sensor.pws_precip_1d
+    - sensor.pws_precip_1d_mm
+    - sensor.pws_wind_1d_kph
+
+heating:
+  view: yes
+  name: Heating
+  entities:
+    - group.temp_downstairs
+    - group.temp_bedroom
+    - group.temp_bathroom
+    - group.temp_automate
+    - sensor.temp_livingroom_1
+    - sensor.temp_livingroom_2
+    - sensor.temp_kitchen
+    - sensor.temp_bedroom
+    - sensor.temp_bathroom
+
+power:
+  view: yes
+  name: Power
+  entities:
+    - group.power_switches
+
+power_switches:
+  view: no
+  name: "Power Switches"
+  entities: 
+    - switch.tv_switch_bedroom_switch
+    - switch.friteuse
+    - switch.egg_cooker
+
+temp_downstairs:
+  view: no
+  name: Downstairs
+  entities:
+    - input_boolean.heat_downstairs
+    - input_number.livingroom_target_temp
+
+temp_bedroom:
+  view: no
+  name: Bedroom
+  entities:
+    - input_boolean.heat_bedroom
+    - input_number.bedroom_target_temp
+
+temp_bathroom:
+  view: no
+  control: hidden
+  name: Bathroom
+  entities:
+    - input_boolean.heat_bathroom
+    - input_boolean.power_heat_bathroom
+    - input_number.bathroom_target_temp
+
+temp_automate:
+  view: no
+  name: Automate
+  entities:
+    - input_boolean.auto_heat
+
+family:
+  name: Family
+  view: no
+  entities:
+    - device_tracker.galaxys8home
+    - device_tracker.androidb919f495d9db45efhome
+
+sonos:
+  name: Sonos
+  view: yes
+  entities:
+    - media_player.kitchen
+    - media_player.living_room
+    - media_player.bathroom
+    - media_player.master_bedroom
+    - media_player.bureau
+
+
+cameras:
+  name: cameras
+  view: yes
+  entities:
+    - camera.foscam_camera
+    - camera.foscam_camera_2
+
+system:
+  name: System
+  view: yes
+  entities:
+    - group.hardware
+    - group.network
+    - group.scripts
+    - group.batteries
+
+hardware:
+  name: Hardware
+  entities:
+    - sensor.disk_used_
+    - sensor.log_db_file_size
+    - sensor.ram_used
+    - sensor.last_boot
+    - script.test
+
+network:
+  name: Network
+  entities:
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.ssl_cert_expiry
+    - sensor.git_version
+
+batteries:
+  name: Batteries
+  entities:
+    - sensor.battery_livingroom_1
+    - sensor.battery_livingroom_2
+    - sensor.battery_kitchen
+    - sensor.battery_bedroom
+    - sensor.battery_bathroom

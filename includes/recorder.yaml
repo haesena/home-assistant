@@ -1,0 +1,32 @@
+purge_interval: 1
+purge_keep_days: 5
+exclude:
+  domains:
+    - automation
+    - group
+  entities:
+    - sensor.tv_switch_bedroom_alarm_level
+    - sensor.tv_switch_bedroom_alarm_type
+    - sensor.tv_switch_bedroom_current
+    - sensor.tv_switch_bedroom_energy
+    - sensor.tv_switch_bedroom_exporting
+    - sensor.tv_switch_bedroom_interval
+    - sensor.tv_switch_bedroom_interval_2
+    - sensor.tv_switch_bedroom_interval_3
+    - sensor.tv_switch_bedroom_interval_4
+    - sensor.tv_switch_bedroom_power
+    - sensor.tv_switch_bedroom_power_management
+    - sensor.tv_switch_bedroom_previous_reading
+    - sensor.tv_switch_bedroom_previous_reading_2
+    - sensor.tv_switch_bedroom_previous_reading_3
+    - sensor.tv_switch_bedroom_previous_reading_4
+    - sensor.tv_switch_bedroom_sourcenodeid
+    - sensor.tv_switch_bedroom_voltage
+    - switch.tv_switch_bedroom_switch
+    - sensor.pws_weather_1d_metric
+    - sensor.pws_wind_1d_kph
+    - sensor.pws_temp_low_1d_c
+    - sensor.pws_temp_high_1d_c
+    - sensor.pws_precip_1d_mm
+    - sensor.pws_precip_1d
+    - sensor.pws_feelslike_c

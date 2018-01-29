@@ -1,0 +1,124 @@
+### During the week, downstairs is heated between 5:30 and 7:00
+- alias: "Turn on Downstairs"
+  trigger: 
+    - platform: time
+      at: "05:30:05"
+    - platform: time
+      at: "09:00:05"
+    - platform: time
+      at: "11:30:05"
+    - platform: time
+      at: "14:30:05"
+    - platform: time
+      at: "16:00:05"
+    - platform: time
+      at: "18:00:05"
+    - platform: state
+      entity_id: input_boolean.auto_heat
+  condition:
+    - condition: state
+      entity_id: input_boolean.auto_heat
+      state: 'on'
+    - condition: or
+      conditions: 
+        - condition: time
+          weekday: 
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+          after: '05:30:00'
+          before: '07:00:00'
+
+        - condition: time
+          weekday: 
+            - mon
+            - fri
+          after: '14:30:00'
+          before: '23:00:00'
+
+        - condition: time
+          weekday: 
+            - tue
+            - thu
+          after: '11:30:00'
+          before: '14:00:00'
+
+        - condition: time
+          weekday: 
+            - tue
+            - thu
+          after: '18:00:00'
+          before: '23:00:00'
+
+        - condition: time
+          weekday: 
+            - wed
+          after: '16:00:00'
+          before: '23:00:00'
+
+        - condition: time
+          weekday: 
+            - sat
+            - sun
+          after: '09:00:00'
+          before: '23:00:00'
+
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.heat_downstairs
+
+
+
+
+- alias: "Turn off Livingroom in the morning"
+  trigger: 
+    platform: time
+    at: "07:00:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on' 
+  - condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_downstairs
+
+- alias: "Turn off Livingroom at midday"
+  trigger: 
+    platform: time
+    at: "14:00:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on' 
+  - condition: time
+    weekday:
+      - tue
+      - thu
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_downstairs
+
+- alias: "Turn off Livingroom for the night"
+  trigger: 
+    platform: time
+    at: "23:00:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on' 
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_downstairs

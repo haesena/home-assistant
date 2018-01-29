@@ -1,0 +1,10 @@
+home-assistant_v2.db
+home-assistant.log
+OZW_Log.txt
+pyozw.sqlite
+secrets.yaml
+known_devices.yaml
+includes/zones.yaml
+html5_push_registrations.conf
+home-assistant_v2.db-wal
+home-assistant_v2.db-shm

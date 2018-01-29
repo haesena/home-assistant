@@ -1,0 +1,103 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 167
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Paris
+  customize: !include includes/customized.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.1.31
+      - 192.168.1.46
+    track_new_devices: false
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+recorder: !include includes/recorder.yaml
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+
+# Text to speech
+tts:
+  - platform: google
+
+zwave:
+  usb_path: /dev/ttyACM0
+
+climate:
+  - platform: zwave
+
+notify:
+  platform: html5
+  gcm_api_key: !secret gcm_api_key
+  gcm_sender_id: !secret gcm_sender_id
+
+input_boolean: !include includes/input_booleans.yaml
+input_number: !include includes/input_numbers.yaml
+sensor: !include includes/sensors.yaml
+
+zone: !include includes/zones.yaml
+group: !include includes/groups.yaml
+automation: !include_dir_merge_list includes/automations
+
+shell_command: !include includes/shell_commands.yaml
+script: !include includes/scripts.yaml
+
+
+camera: !include includes/cameras.yaml
+
+google_assistant:
+  project_id: !secret ga_project_id
+  client_id: !secret ga_client_id
+  access_token: !secret ga_access_token
+  agent_user_id: !secret ga_user_id
+  api_key: !secret ga_api_key
+
+mqtt:
+  broker: 192.168.1.61
+  port: 1883
+  client_id: home-assistant-1
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  keepalive: 60
+
+switch: !include includes/switches.yaml

@@ -1,0 +1,22 @@
+- platform: mqtt
+  name: "Friteuse"
+  state_topic: "stat/friteuse/POWER"
+  command_topic: "cmnd/friteuse/POWER"
+  availability_topic: "tele/friteuse/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Egg cooker"
+  state_topic: "stat/eggcooker/POWER"
+  command_topic: "cmnd/eggcooker/POWER"
+  availability_topic: "tele/eggcooker/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true

@@ -1,0 +1,4 @@
+test:
+  alias: Test
+  sequence:
+    - service: shell_command.test

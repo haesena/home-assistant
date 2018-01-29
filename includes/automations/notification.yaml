@@ -1,0 +1,104 @@
+- alias: 'Battery Low Alert - Livingroom 1'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.battery_livingroom_1
+    below: 10
+  action:
+    service: notify.notify
+    data:
+      message: "The Battery of the livingroom thermostat 2 is running low (<10%)"
+      title: "Low battery"
+- alias: 'Battery Low Alert - Livingroom 2'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.battery_livingroom_2
+    below: 10
+  action:
+    service: notify.notify
+    data:
+      message: "The Battery of the livingroom thermostat 2 is running low (<10%)"
+      title: "Low battery"
+- alias: 'Battery Low Alert - Kitchen'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.battery_kitchen
+    below: 10
+  action:
+    service: notify.notify
+    data:
+      message: "The Battery of the kitchen thermostat is running low (<10%)"
+      title: "Low battery"
+- alias: 'Battery Low Alert - Bedroom'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.battery_bedroom
+    below: 10
+  action:
+    service: notify.notify
+    data:
+      message: "The Battery of the bedroom thermostat is running low (<10%)"
+      title: "Low battery"
+- alias: 'Battery Low Alert - Bathroom'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.battery_bathroom
+    below: 10
+  action:
+    service: notify.notify
+    data:
+      message: "The Battery of the bathroom thermostat is running low (<10%)"
+      title: "Low battery"
+
+- alias: "Good morning"
+  trigger: 
+    - platform: time
+      at: "06:00:05"
+    - platform: time
+      at: "08:30:05"
+  condition:
+    - condition: state
+      entity_id: input_boolean.auto_heat
+      state: 'on'
+    - condition: or
+      conditions: 
+        - condition: time
+          weekday: 
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+          after: '06:00:00'
+          before: '06:05:00'
+
+        - condition: time
+          weekday: 
+            - sat
+            - sun
+          after: '08:30:00'
+          before: '08:35:00'
+  action:
+    service: notify.notify
+    data:
+      message: "Good morning, do you want to start the morning routine?"
+      title: "Good morning"
+      data:
+        tag: good-morning
+        actions:
+          - action: start_morning_routine
+            title: Start
+          - action: cancel_morning_routine
+            title: Cancel
+
+
+
+- alias: 'Start morning routine'
+  trigger:
+    platform: event
+    event_type: html5_notification.clicked
+    event_data:
+      action: start_morning_routine
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_bedroom

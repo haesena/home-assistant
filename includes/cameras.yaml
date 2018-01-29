@@ -1,0 +1,8 @@
+- platform: foscam
+  ip: 192.168.1.35
+  username: !secret camera_1_username
+  password: !secret camera_1_password
+- platform: foscam
+  ip: 192.168.1.36
+  username: !secret camera_2_username
+  password: !secret camera_2_password

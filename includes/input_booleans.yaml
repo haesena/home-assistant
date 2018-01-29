@@ -1,0 +1,20 @@
+heat_downstairs:
+  name: Downstair Heating
+  initial: off
+  icon: mdi:power
+heat_bedroom:
+  name: Bedroom Heating
+  initial: off
+  icon: mdi:power
+heat_bathroom:
+  name: Bathroom Heating
+  initial: off
+  icon: mdi:power
+power_heat_bathroom:
+  name: Power Heat Bathroom
+  initial: off
+  icon: mdi:power
+auto_heat:
+  name: Automatic Heating
+  initial: off
+  icon: mdi:clock

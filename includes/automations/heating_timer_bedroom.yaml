@@ -1,0 +1,86 @@
+### Bedroom heats every day between 22:30 and 00:30
+### During the week, the bedroom is heated between 5:30 and 6:00
+### On the weekend, the bedroom is heated between 7:30 and 10:00
+- alias: "Turn on Bedroom"
+  trigger: 
+    - platform: time
+      at: "05:00:05"
+    - platform: time
+      at: "07:30:05"
+    - platform: time
+      at: "22:30:05"
+    - platform: state
+      entity_id: input_boolean.auto_heat
+  condition:
+    - condition: state
+      entity_id: input_boolean.auto_heat
+      state: 'on'
+    - condition: or
+      conditions: 
+        - condition: time
+          weekday: 
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+          after: '05:00:00'
+          before: '06:30:00'
+
+        - condition: time
+          weekday: 
+            - sat
+            - sun
+          after: '07:30:00'
+          before: '10:00:00'
+
+        - condition: time
+          after: '22:30:00'
+          before: '00:30:00'
+
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.heat_bedroom
+
+
+- alias: "Turn off Bedroom during the week"
+  trigger:
+    - platform: time
+      at: "06:30:00"
+    - platform: time
+      at: "00:30:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on'
+  - condition: time
+    weekday: 
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_bedroom
+
+- alias: "Turn off Bedroom during the weekend"
+  trigger:
+    - platform: time
+      at: "10:00:00"
+    - platform: time
+      at: "00:30:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on'
+  - condition: time
+    weekday: 
+      - sat
+      - sun
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_bedroom

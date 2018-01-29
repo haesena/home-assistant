@@ -1,0 +1,100 @@
+### During the week, bathroom heats between 5:30 and 7:00 and between 21:30 and 23:00
+### During the weekend, bathroom heats between 8:30 and 10:00 and between 22:30 and 0:00
+- alias: "Turn on Bathroom"
+  trigger: 
+    - platform: time
+      at: "05:00:05"
+    - platform: time
+      at: "08:30:05"
+    - platform: time
+      at: "21:30:05"
+    - platform: time
+      at: "22:30:05"
+    - platform: state
+      entity_id: input_boolean.auto_heat
+  condition:
+    - condition: state
+      entity_id: input_boolean.auto_heat
+      state: 'on'
+    - condition: or
+      conditions: 
+        - condition: time
+          weekday: 
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+          after: '05:00:00'
+          before: '07:00:00'
+
+        - condition: time
+          weekday: 
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+          after: '21:30:00'
+          before: '23:00:00'
+
+        - condition: time
+          weekday: 
+            - sat
+            - sun
+          after: '08:30:00'
+          before: '10:00:00'
+
+        - condition: time
+          weekday: 
+            - sat
+            - sun
+          after: '22:30:00'
+          before: '00:00:00'
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.heat_bathroom
+
+
+
+- alias: "Turn off Bathroom during the week"
+  trigger:
+    - platform: time
+      at: "07:00:00"
+    - platform: time
+      at: "23:00:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on'
+  - condition: time
+    weekday: 
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_bathroom
+
+- alias: "Turn off Bathroom during the weekend"
+  trigger:
+    - platform: time
+      at: "10:00:00"
+    - platform: time
+      at: "23:59:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.auto_heat
+    state: 'on'
+  - condition: time
+    weekday: 
+      - sat
+      - sun
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heat_bathroom
