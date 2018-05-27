@@ -123,7 +123,6 @@ network:
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.ssl_cert_expiry
-    - sensor.git_version
 
 batteries:
   name: Batteries

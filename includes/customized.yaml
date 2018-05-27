@@ -6,6 +6,3 @@ sensor.ssl_cert_expiry:
   icon: mdi:certificate
 sensor.disk_use_:
   friendly_name: Disk use
-sensor.git_version:
-  friendly_name: Git Version
-  icon: mdi:git

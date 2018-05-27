@@ -35,7 +35,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
       - 192.168.1.31
-      - 192.168.1.46
+      - 192.168.1.20
     track_new_devices: false
 
 # Discover some devices automatically
@@ -75,7 +75,7 @@ input_boolean: !include includes/input_booleans.yaml
 input_number: !include includes/input_numbers.yaml
 sensor: !include includes/sensors.yaml
 
-zone: !include includes/zones.yaml
+# zone: !include includes/zones.yaml
 group: !include includes/groups.yaml
 automation: !include_dir_merge_list includes/automations
 
